@@ -21,27 +21,20 @@ vim.keymap.set({'n', 'v'}, '<M-Right>', 'w', { noremap = true })
 -- Option + Delete to delete word backward
 vim.keymap.set('i', '<M-BS>', '<C-w>', { noremap = true })
 
--- Shift + Arrow keys to enter select mode and select
+-- Shift + Option + Arrow keys to select by word (enter select mode)
+vim.keymap.set('i', '<M-S-Left>', '<C-o>vb<C-g>', { noremap = true })
+vim.keymap.set('i', '<M-S-Right>', '<C-o>ve<C-g>', { noremap = true })
+
+-- Shift + Arrow keys to select character by character (enter select mode)
 vim.keymap.set('i', '<S-Left>', '<C-o>v<Left><C-g>', { noremap = true })
 vim.keymap.set('i', '<S-Right>', '<C-o>v<C-g>', { noremap = true })
 vim.keymap.set('i', '<S-Up>', '<C-o>v<Up><C-g>', { noremap = true })
 vim.keymap.set('i', '<S-Down>', '<C-o>v<Down><C-g>', { noremap = true })
 
--- Shift + Option + Arrow keys to select by word
-vim.keymap.set('i', '<M-S-Left>', '<C-o>vb<C-g>', { noremap = true })
-vim.keymap.set('i', '<M-S-Right>', '<C-o>vw<C-g>', { noremap = true })
-
--- Extend selection in select mode
-vim.keymap.set('s', '<S-Left>', '<Left>', { noremap = true })
-vim.keymap.set('s', '<S-Right>', '<Right>', { noremap = true })
-vim.keymap.set('s', '<S-Up>', '<Up>', { noremap = true })
-vim.keymap.set('s', '<S-Down>', '<Down>', { noremap = true })
+-- Extend selection by word in select mode
 vim.keymap.set('s', '<M-S-Left>', '<C-o>b', { noremap = true })
-vim.keymap.set('s', '<M-S-Right>', '<C-o>w', { noremap = true })
+vim.keymap.set('s', '<M-S-Right>', '<C-o>e', { noremap = true })
 
--- Backspace/Delete in select mode deletes selection and enters insert
-vim.keymap.set('s', '<BS>', '<BS>i', { noremap = true })
-vim.keymap.set('s', '<Del>', '<Del>i', { noremap = true })
 
 -- =========================
 -- Manual plugin installation
@@ -72,6 +65,7 @@ ensure_plugin("https://github.com/hrsh7th/cmp-nvim-lsp", "cmp-nvim-lsp")
 ensure_plugin("https://github.com/hrsh7th/cmp-buffer", "cmp-buffer")
 ensure_plugin("https://github.com/nvim-lua/plenary.nvim", "plenary.nvim")
 ensure_plugin("https://github.com/nvim-telescope/telescope.nvim", "telescope.nvim")
+ensure_plugin("https://github.com/windwp/nvim-autopairs", "nvim-autopairs")
 
 -- Install Treesitter from master branch
 local ts_path = plugin_path .. "nvim-treesitter"
@@ -129,6 +123,22 @@ vim.diagnostic.config({
     virtual_text = {
         prefix = "●",
     },
+})
+
+-- Fix statusline colors for better readability
+vim.api.nvim_set_hl(0, "StatusLine", { fg = "White", bg = "DarkGray", bold = true })
+vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "Gray", bg = "Black" })
+
+-- =========================
+-- Autopairs setup
+-- =========================
+require("nvim-autopairs").setup({
+    check_ts = true, -- use treesitter
+    ts_config = {
+        lua = {'string'}, -- don't add pairs in lua string treesitter nodes
+        javascript = {'template_string'},
+    },
+    fast_wrap = {}, -- enable fast wrap with Alt+e
 })
 
 -- =========================
@@ -199,3 +209,7 @@ cmp.setup({
         { name = "buffer" },
     }),
 })
+
+-- Integrate autopairs with cmp (moved from autopairs section to avoid double require)
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
