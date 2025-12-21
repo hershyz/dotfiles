@@ -10,6 +10,9 @@ vim.opt.termguicolors = true
 vim.g.mapleader = " "
 
 -- "MacOS native" keymaps
+-- Use system clipboard by default
+vim.opt.clipboard = "unnamedplus"
+
 -- Option + Left/Right to move by word (stay in insert mode)
 vim.keymap.set('i', '<M-Left>', '<C-o>b', { noremap = true })
 vim.keymap.set('i', '<M-Right>', '<C-o>w', { noremap = true })
