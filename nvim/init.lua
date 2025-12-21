@@ -21,20 +21,29 @@ vim.keymap.set({'n', 'v'}, '<M-Right>', 'w', { noremap = true })
 -- Option + Delete to delete word backward
 vim.keymap.set('i', '<M-BS>', '<C-w>', { noremap = true })
 
--- Shift + Option + Arrow keys to select by word (enter select mode)
-vim.keymap.set('i', '<M-S-Left>', '<C-o>vb<C-g>', { noremap = true })
-vim.keymap.set('i', '<M-S-Right>', '<C-o>ve<C-g>', { noremap = true })
+-- Shift + Arrow keys to select (visual mode)
+vim.keymap.set('i', '<S-Left>', '<Esc>vh', { noremap = true })
+vim.keymap.set('i', '<S-Right>', '<Esc>vl', { noremap = true })
+vim.keymap.set('i', '<S-Up>', '<Esc>vk', { noremap = true })
+vim.keymap.set('i', '<S-Down>', '<Esc>vj', { noremap = true })
 
--- Shift + Arrow keys to select character by character (enter select mode)
-vim.keymap.set('i', '<S-Left>', '<C-o>v<Left><C-g>', { noremap = true })
-vim.keymap.set('i', '<S-Right>', '<C-o>v<C-g>', { noremap = true })
-vim.keymap.set('i', '<S-Up>', '<C-o>v<Up><C-g>', { noremap = true })
-vim.keymap.set('i', '<S-Down>', '<C-o>v<Down><C-g>', { noremap = true })
+-- Shift + Arrow to extend selection in visual mode
+vim.keymap.set('v', '<S-Left>', 'h', { noremap = true })
+vim.keymap.set('v', '<S-Right>', 'l', { noremap = true })
+vim.keymap.set('v', '<S-Up>', 'k', { noremap = true })
+vim.keymap.set('v', '<S-Down>', 'j', { noremap = true })
 
--- Extend selection by word in select mode
-vim.keymap.set('s', '<M-S-Left>', '<C-o>b', { noremap = true })
-vim.keymap.set('s', '<M-S-Right>', '<C-o>e', { noremap = true })
+-- Shift + Option + Arrow keys to select by word
+vim.keymap.set('i', '<M-S-Left>', '<Esc>vb', { noremap = true })
+vim.keymap.set('i', '<M-S-Right>', '<Esc>vw', { noremap = true })
 
+-- Shift + Option + Arrow to extend selection by word in visual mode
+vim.keymap.set('v', '<M-S-Left>', 'b', { noremap = true })
+vim.keymap.set('v', '<M-S-Right>', 'w', { noremap = true })
+
+-- Type to replace selected text (in visual mode)
+vim.keymap.set('v', '<BS>', '"_d', { noremap = true })
+vim.keymap.set('v', '<Del>', '"_d', { noremap = true })
 
 -- =========================
 -- Manual plugin installation
@@ -66,6 +75,7 @@ ensure_plugin("https://github.com/hrsh7th/cmp-buffer", "cmp-buffer")
 ensure_plugin("https://github.com/nvim-lua/plenary.nvim", "plenary.nvim")
 ensure_plugin("https://github.com/nvim-telescope/telescope.nvim", "telescope.nvim")
 ensure_plugin("https://github.com/windwp/nvim-autopairs", "nvim-autopairs")
+ensure_plugin("https://github.com/nvim-lualine/lualine.nvim", "lualine.nvim")
 
 -- Install Treesitter from master branch
 local ts_path = plugin_path .. "nvim-treesitter"
@@ -100,7 +110,7 @@ require("gruvbox").setup({
     invert_signs = false,
     invert_tabline = false,
     inverse = true,
-    contrast = "", -- "hard", "soft" or "" (normal)
+    contrast = "hard", -- "hard", "soft" or "" (normal)
     palette_overrides = {},
     overrides = {},
     dim_inactive = false,
@@ -110,7 +120,30 @@ require("gruvbox").setup({
 vim.o.background = "dark"
 vim.cmd([[colorscheme gruvbox]])
 
--- Fix diagnostic signs to be less intrusive
+-- =========================
+-- Lualine setup
+-- TODO: needs some config changes
+-- =========================
+require('lualine').setup({
+    options = {
+        theme = 'gruvbox',
+        component_separators = { left = '|', right = '|'},
+        section_separators = { left = '', right = ''},
+        globalstatus = true,
+    },
+    sections = {
+        lualine_a = {'mode'},
+        lualine_b = {'branch', 'diff', 'diagnostics'},
+        lualine_c = {'filename'},
+        lualine_x = {'filetype'},
+        lualine_y = {'progress'},
+        lualine_z = {'location'}
+    },
+})
+
+-- =========================
+-- Diagnostic signs
+-- =========================
 vim.diagnostic.config({
     signs = {
         text = {
@@ -124,10 +157,6 @@ vim.diagnostic.config({
         prefix = "●",
     },
 })
-
--- Fix statusline colors for better readability
-vim.api.nvim_set_hl(0, "StatusLine", { fg = "White", bg = "DarkGray", bold = true })
-vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "Gray", bg = "Black" })
 
 -- =========================
 -- Autopairs setup
