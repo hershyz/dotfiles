@@ -48,6 +48,9 @@ vim.keymap.set('v', '<Del>', '"_d', { noremap = true })
 -- Copy entire buffer to clipboard
 vim.keymap.set('n', '<leader>ya', ':%y+<CR>', { desc = 'Yank all to clipboard' })
 
+-- Yank selection to system clipboard
+vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Yank to clipboard' })
+
 -- =========================
 -- Manual plugin installation
 -- =========================
