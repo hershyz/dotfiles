@@ -45,6 +45,9 @@ vim.keymap.set('v', '<M-S-Right>', 'w', { noremap = true })
 vim.keymap.set('v', '<BS>', '"_d', { noremap = true })
 vim.keymap.set('v', '<Del>', '"_d', { noremap = true })
 
+-- Copy entire buffer to clipboard
+vim.keymap.set('n', '<leader>ya', ':%y+<CR>', { desc = 'Yank all to clipboard' })
+
 -- =========================
 -- Manual plugin installation
 -- =========================
