@@ -38,6 +38,24 @@ vim.keymap.set('i', '<S-M-Left>', '<C-o>gh<C-o>b', { desc = 'Select word left' }
 vim.keymap.set('s', '<S-M-Right>', '<C-o>w', { desc = 'Extend selection word right' })
 vim.keymap.set('s', '<S-M-Left>', '<C-o>b', { desc = 'Extend selection word left' })
 
+-- Option+Arrow for word navigation
+-- Insert mode: use <C-o> to execute normal mode command
+vim.keymap.set('i', '<M-Right>', '<C-o>w', { desc = 'Move forward one word' })
+vim.keymap.set('i', '<M-Left>', '<C-o>b', { desc = 'Move backward one word' })
+
+-- Normal mode: just use the motions directly
+vim.keymap.set('n', '<M-Right>', 'w', { desc = 'Move forward one word' })
+vim.keymap.set('n', '<M-Left>', 'b', { desc = 'Move backward one word' })
+
+-- Visual/Select mode: use <C-o> to execute without leaving mode
+vim.keymap.set('v', '<M-Right>', '<C-o>w', { desc = 'Move forward one word' })
+vim.keymap.set('v', '<M-Left>', '<C-o>b', { desc = 'Move backward one word' })
+vim.keymap.set('s', '<M-Right>', '<C-o>w', { desc = 'Move forward one word' })
+vim.keymap.set('s', '<M-Left>', '<C-o>b', { desc = 'Move backward one word' })
+
+-- Option+Delete to delete word backward (in insert mode)
+vim.keymap.set('i', '<M-BS>', '<C-w>', { desc = 'Delete word backward' })
+
 -- In select mode, arrow keys extend selection (via keymodel)
 -- No need to map shift+arrows in select mode - keymodel handles it
 
