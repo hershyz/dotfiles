@@ -308,6 +308,6 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 --[[
 
     NOTES:
-    - A nerd font is needed for icons, JetBrains Mono nerd font is what I'm rocking rn
+    - A nerd font is needed for icons, JetBrains Mono nerd font (light) is what I'm rocking rn
     
 --]]
