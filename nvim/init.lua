@@ -16,11 +16,14 @@ vim.opt.mousemodel = "popup_setpos"
 -- Use system clipboard by default
 vim.opt.clipboard = "unnamedplus"
 
+-- Enable smart line wrapping for left/right arrows
+vim.opt.whichwrap = "b,s,<,>,[,]"
+
 -- Copy entire buffer to clipboard
 vim.keymap.set('n', 'ya', ':%y+<CR>', { desc = 'Yank all to clipboard' })
 
--- Yank selection to system clipboard
-vim.keymap.set('v', 'y', '"+y', { desc = 'Yank to clipboard' })
+-- Yank selection to system clipboard (Cmd + C)
+-- TODO
 
 -- ==========================
 -- macOS-style shift+arrow selection in insert mode
