@@ -4,14 +4,16 @@
 vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
+vim.opt.shiftwidth = 3
+vim.opt.tabstop = 3
+vim.opt.softtabstop = 3
 vim.opt.termguicolors = true
 vim.g.mapleader = " "
 vim.opt.selectmode = "mouse,key"
 vim.opt.keymodel = "startsel,stopsel"
 vim.opt.selection = "exclusive"
 vim.opt.mousemodel = "popup_setpos"
+vim.o.mouse = "a"
 
 -- Use system clipboard by default
 vim.opt.clipboard = "unnamedplus"
@@ -22,8 +24,12 @@ vim.opt.whichwrap = "b,s,<,>,[,]"
 -- Copy entire buffer to clipboard
 vim.keymap.set('n', 'ya', ':%y+<CR>', { desc = 'Yank all to clipboard' })
 
--- Yank selection to system clipboard (Cmd + C)
 -- TODO
+-- Bind to select entire buffer with rewrite/delete capabilities afterwards
+
+-- TODO
+-- Native cmd + c
+-- Native cmd + x
 
 -- ==========================
 -- macOS-style shift+arrow selection in insert mode
@@ -181,7 +187,7 @@ vim.cmd([[colorscheme gruvbox]])
 -- ==========================
 require('lualine').setup({
   options = {
-    theme = 'gruvbox',
+    theme = 'gruvbox_dark',
     component_separators = { left = '|', right = '|'},
     section_separators = { left = '', right = ''},
     globalstatus = true,
@@ -300,6 +306,8 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 
 --[[
+
     NOTES:
     - A nerd font is needed for icons, JetBrains Mono nerd font is what I'm rocking rn
+    
 --]]
