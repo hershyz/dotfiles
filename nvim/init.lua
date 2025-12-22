@@ -8,9 +8,10 @@ vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.termguicolors = true
 vim.g.mapleader = " "
-vim.opt.selectmode = "key"
+vim.opt.selectmode = "mouse,key"
 vim.opt.keymodel = "startsel,stopsel"
 vim.opt.selection = "exclusive"
+vim.opt.mousemodel = "popup_setpos"
 
 -- Use system clipboard by default
 vim.opt.clipboard = "unnamedplus"
@@ -89,6 +90,16 @@ ensure_plugin("https://github.com/nvim-lua/plenary.nvim", "plenary.nvim")
 ensure_plugin("https://github.com/nvim-telescope/telescope.nvim", "telescope.nvim")
 ensure_plugin("https://github.com/windwp/nvim-autopairs", "nvim-autopairs")
 ensure_plugin("https://github.com/nvim-lualine/lualine.nvim", "lualine.nvim")
+ensure_plugin("https://github.com/nvim-tree/nvim-web-devicons", "nvim-web-devicons")
+ensure_plugin("https://github.com/MunifTanjim/nui.nvim", "nui.nvim")
+
+-- Install neo-tree from v3.x branch
+local neotree_path = plugin_path .. "neo-tree.nvim"
+if vim.fn.isdirectory(neotree_path) == 0 then
+  print("Installing neo-tree.nvim (v3.x branch)...")
+  vim.fn.system({ "git", "clone", "--depth=1", "--branch=v3.x", "https://github.com/nvim-neo-tree/neo-tree.nvim", neotree_path })
+  vim.cmd("packloadall!")
+end
 
 -- Install Treesitter from master branch
 local ts_path = plugin_path .. "nvim-treesitter"
@@ -97,6 +108,41 @@ if vim.fn.isdirectory(ts_path) == 0 then
   vim.fn.system({ "git", "clone", "--depth=1", "--branch=master", "https://github.com/nvim-treesitter/nvim-treesitter", ts_path })
   vim.cmd("packloadall!")
 end
+
+-- ==========================
+-- Neo-tree setup
+-- ==========================
+require("nvim-web-devicons").setup({
+  default = true,
+})
+
+require("neo-tree").setup({
+  close_if_last_window = true,
+  popup_border_style = "rounded",
+  enable_git_status = true,
+  enable_diagnostics = true,
+  default_component_configs = {
+    icon = {
+      folder_closed = "",
+      folder_open = "",
+      folder_empty = "",
+      default = "",
+    },
+  },
+  filesystem = {
+    follow_current_file = {
+      enabled = true,
+    },
+    use_libuv_file_watcher = true,
+  },
+  window = {
+    position = "left",
+    width = 30,
+  },
+})
+
+-- Neo-tree keymap
+vim.keymap.set('n', '<leader>ft', ':Neotree toggle<CR>', { desc = 'Toggle Neo-tree', silent = true })
 
 -- ==========================
 -- Gruvbox setup
@@ -248,3 +294,9 @@ cmp.setup({
 -- Integrate autopairs with cmp
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+
+
+--[[
+    NOTES:
+    - A nerd font is needed for icons, JetBrains Mono nerd font is what I'm rocking rn
+--]]
