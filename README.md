@@ -9,3 +9,6 @@ Currently just my GPT'd nvim config
 - [ ] Mapping for selection of entire buffer + ability to delete/write over directly afterwards
 - [ ] Smooth scrolling?
 - [ ] Move to lazy.nvim?
+
+#### Notes on iterm2
+- Allow application keypad mode
