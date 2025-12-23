@@ -11,9 +11,13 @@ vim.opt.termguicolors = true
 vim.g.mapleader = " "
 vim.opt.selectmode = "mouse,key"
 vim.opt.keymodel = "startsel,stopsel"
-vim.opt.selection = "exclusive"
+vim.opt.selection = "inclusive"
 vim.opt.mousemodel = "popup_setpos"
 vim.o.mouse = "a"
+
+-- ==========================
+-- macOS-style keymaps
+-- ==========================
 
 -- Use system clipboard by default
 vim.opt.clipboard = "unnamedplus"
@@ -31,9 +35,6 @@ vim.keymap.set('n', 'ya', ':%y+<CR>', { desc = 'Yank all to clipboard' })
 -- Native cmd + c
 -- Native cmd + x
 
--- ==========================
--- macOS-style shift+arrow selection in insert mode
--- ==========================
 -- Start selection from insert mode - exit insert, start select, move
 vim.keymap.set('i', '<S-Right>', '<C-o>gh<C-o>l', { desc = 'Select right' })
 vim.keymap.set('i', '<S-Left>', '<C-o>gh<C-o>h', { desc = 'Select left' })
@@ -87,7 +88,7 @@ local function ensure_plugin(url, name)
   end
 end
 
--- Install plugins
+-- Install plugins from default branches
 ensure_plugin("https://github.com/ellisonleao/gruvbox.nvim", "gruvbox.nvim")
 ensure_plugin("https://github.com/neovim/nvim-lspconfig", "nvim-lspconfig")
 ensure_plugin("https://github.com/williamboman/mason.nvim", "mason.nvim")
@@ -307,7 +308,8 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 --[[
 
-    NOTES:
+    Notes / non-nvim configs:
     - A nerd font is needed for icons, JetBrains Mono nerd font (light) is what I'm rocking rn
-    
+    - 
+
 --]]
