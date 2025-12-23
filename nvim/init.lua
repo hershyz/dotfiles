@@ -388,7 +388,8 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
     - A nerd font is needed for icons, JetBrains Mono nerd font (light) is what I'm rocking rn
     
-    - Allow application keypad mode on iterm2
+    - Allow application keypad mode in iterm2
+    - Allow GPU rendering even when disconnected from power in iterm2
     
     - iterm2 hex code sequences to make copy/cut/paste work (settings -> profiles -> keys -> key bindings)
       - cmd+a -> 0x1b 0x61
