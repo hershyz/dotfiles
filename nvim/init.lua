@@ -25,15 +25,34 @@ vim.opt.clipboard = "unnamedplus"
 -- Enable smart line wrapping for left/right arrows
 vim.opt.whichwrap = "b,s,<,>,[,]"
 
--- Copy entire buffer to clipboard
-vim.keymap.set('n', 'ya', ':%y+<CR>', { desc = 'Yank all to clipboard' })
+-- 1. SELECT ALL (Cmd+A -> <M-a>)
+-- Logic: Exit mode -> Go to start -> Visual Select All -> Switch to Select Mode
+vim.keymap.set({ 'n', 'i', 'v', 's' }, '<M-a>', '<Esc>ggVG<C-g>', { desc = 'Select All' })
 
--- TODO
--- Bind to select entire buffer with rewrite/delete capabilities afterwards
+-- 2. COPY (Cmd+C -> <M-c>)
+-- Logic: 
+-- In Visual: Yank to + register
+-- In Select: Switch to Visual (<C-g>), then Yank
+vim.keymap.set('v', '<M-c>', '"+y', { desc = 'Copy' })
+vim.keymap.set('s', '<M-c>', '<C-g>"+y', { desc = 'Copy' })
 
--- TODO
--- Native cmd + c
--- Native cmd + x
+-- 3. CUT (Cmd+X -> <M-x>)
+-- Logic:
+-- In Visual: Cut to + register
+-- In Select: Switch to Visual (<C-g>), then Cut
+vim.keymap.set('v', '<M-x>', '"+x', { desc = 'Cut' })
+vim.keymap.set('s', '<M-x>', '<C-g>"+x', { desc = 'Cut' })
+
+-- 4. PASTE (Cmd+V -> <M-v>)
+-- Logic:
+-- Insert Mode: Paste from + register using <C-r>
+vim.keymap.set('i', '<M-v>', '<C-r>+', { desc = 'Paste' })
+-- Normal Mode: Paste from + register
+vim.keymap.set('n', '<M-v>', '"+p', { desc = 'Paste' })
+-- Visual Mode: Paste over selection
+vim.keymap.set('v', '<M-v>', '"+p', { desc = 'Paste' })
+-- Select Mode: Switch to Visual (<C-g>), then Paste
+vim.keymap.set('s', '<M-v>', '<C-g>"+p', { desc = 'Paste' })
 
 -- Start selection from insert mode - exit insert, start select, move
 vim.keymap.set('i', '<S-Right>', '<C-o>gh<C-o>l', { desc = 'Select right' })
@@ -310,6 +329,11 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
     Notes / non-nvim configs:
     - A nerd font is needed for icons, JetBrains Mono nerd font (light) is what I'm rocking rn
-    - 
+    - Allow application keypad mode on iterm2
+    - iterm2 hex code sequences to make copy/cut/paste work (settings -> profiles -> keys -> key bindings)
+      - cmd+a -> 0x1b 0x61
+      - cmd+c -> 0x1b 0x63
+      - cmd+v -> 0x1b 0x76
+      - cmd+x -> 0x1b 0x78
 
 --]]
