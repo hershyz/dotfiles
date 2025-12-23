@@ -1,4 +1,4 @@
-Currently just my nvim config.  
+Currently just my nvim config and some iterm2 keymaps.  
 Definitely not a template, meant to feel as Mac-native as possible.  
 Additional notes/non-nvim (iterm2) configs at the bottom of `init.lua`.
 
@@ -7,7 +7,7 @@ Additional notes/non-nvim (iterm2) configs at the bottom of `init.lua`.
 #### TODO (in rough order of importance):
 - [X] Native-like buffer selection funcionality
 - [X] Native-like `cmd + c`, `cmd + x`, `cmd + v` functionality
-- [ ] Native-like `cmd + [arrow]` functionality
+- [X] Native-like `cmd + [arrow]` functionality
 - [ ] Git integration (gitsigns)
 - [ ] Native-like `cmd + s`, `cmd + z` functionality
 - [ ] Tab/shift+tab on selected buffer (move multiple lines right/left)
