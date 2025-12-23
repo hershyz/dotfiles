@@ -14,6 +14,7 @@ vim.opt.keymodel = "startsel,stopsel"
 vim.opt.selection = "inclusive"
 vim.opt.mousemodel = "popup_setpos"
 vim.o.mouse = "a"
+vim.opt.wrap = false
 
 -- ==========================
 -- macOS-style keymaps
