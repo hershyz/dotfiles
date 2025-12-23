@@ -1,4 +1,4 @@
--- ==========================
+-- =======================
 -- Core settings
 -- ==========================
 vim.opt.number = true
@@ -92,6 +92,46 @@ vim.keymap.set('i', '<M-BS>', '<C-w>', { desc = 'Delete word backward' })
 
 -- Backspace in select mode deletes selection and enters insert
 vim.keymap.set('s', '<BS>', '<BS>i', { desc = 'Delete selection' })
+
+-- Cmd+Left/Right: Start/End of line
+vim.keymap.set('i', '<M-l>', '<C-o>0', { desc = 'Go to start of line' })
+vim.keymap.set('n', '<M-l>', '0', { desc = 'Go to start of line' })
+vim.keymap.set('v', '<M-l>', '0', { desc = 'Go to start of line' })
+vim.keymap.set('s', '<M-l>', '<C-o>0', { desc = 'Go to start of line' })
+
+vim.keymap.set('i', '<M-r>', '<C-o>$', { desc = 'Go to end of line' })
+vim.keymap.set('n', '<M-r>', '$', { desc = 'Go to end of line' })
+vim.keymap.set('v', '<M-r>', '$', { desc = 'Go to end of line' })
+vim.keymap.set('s', '<M-r>', '<C-o>$', { desc = 'Go to end of line' })
+
+-- Cmd+Up/Down: Start/End of buffer
+vim.keymap.set('i', '<M-u>', '<C-o>gg', { desc = 'Go to start of buffer' })
+vim.keymap.set('n', '<M-u>', 'gg', { desc = 'Go to start of buffer' })
+vim.keymap.set('v', '<M-u>', 'gg', { desc = 'Go to start of buffer' })
+vim.keymap.set('s', '<M-u>', '<C-o>gg', { desc = 'Go to start of buffer' })
+
+vim.keymap.set('i', '<M-d>', '<C-o>G', { desc = 'Go to end of buffer' })
+vim.keymap.set('n', '<M-d>', 'G', { desc = 'Go to end of buffer' })
+vim.keymap.set('v', '<M-d>', 'G', { desc = 'Go to end of buffer' })
+vim.keymap.set('s', '<M-d>', '<C-o>G', { desc = 'Go to end of buffer' })
+
+-- Cmd+Shift+Left/Right: Select to start/end of line
+vim.keymap.set('i', '<M-L>', '<C-o>gh<C-o>0', { desc = 'Select to start of line' })
+vim.keymap.set('n', '<M-L>', 'v0', { desc = 'Select to start of line' })
+vim.keymap.set('s', '<M-L>', '<C-o>0', { desc = 'Extend selection to start of line' })
+
+vim.keymap.set('i', '<M-R>', '<C-o>gh<C-o>$', { desc = 'Select to end of line' })
+vim.keymap.set('n', '<M-R>', 'v$', { desc = 'Select to end of line' })
+vim.keymap.set('s', '<M-R>', '<C-o>$', { desc = 'Extend selection to end of line' })
+
+-- Cmd+Shift+Up/Down: Select to start/end of buffer
+vim.keymap.set('i', '<M-U>', '<C-o>gh<C-o>gg', { desc = 'Select to start of buffer' })
+vim.keymap.set('n', '<M-U>', 'vgg', { desc = 'Select to start of buffer' })
+vim.keymap.set('s', '<M-U>', '<C-o>gg', { desc = 'Extend selection to start of buffer' })
+
+vim.keymap.set('i', '<M-D>', '<C-o>gh<C-o>G', { desc = 'Select to end of buffer' })
+vim.keymap.set('n', '<M-D>', 'vG', { desc = 'Select to end of buffer' })
+vim.keymap.set('s', '<M-D>', '<C-o>G', { desc = 'Extend selection to end of buffer' })
 
 -- ==========================
 -- Manual plugin installation
@@ -345,12 +385,25 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 --[[
 
     Notes / non-nvim configs:
+
     - A nerd font is needed for icons, JetBrains Mono nerd font (light) is what I'm rocking rn
+    
     - Allow application keypad mode on iterm2
+    
     - iterm2 hex code sequences to make copy/cut/paste work (settings -> profiles -> keys -> key bindings)
       - cmd+a -> 0x1b 0x61
       - cmd+c -> 0x1b 0x63
       - cmd+v -> 0x1b 0x76
       - cmd+x -> 0x1b 0x78
+
+   - iterm2 hex code sequences to make cmd+[arrow] jumping/selection work
+      Cmd+Left: 0x1b 0x6c (Esc + l for "left")
+      Cmd+Right: 0x1b 0x72 (Esc + r for "right")
+      Cmd+Up: 0x1b 0x75 (Esc + u for "up")
+      Cmd+Down: 0x1b 0x64 (Esc + d for "down")
+      Cmd+Shift+Left: 0x1b 0x4c (Esc + L)
+      Cmd+Shift+Right: 0x1b 0x52 (Esc + R)
+      Cmd+Shift+Up: 0x1b 0x55 (Esc + U)
+      Cmd+Shift+Down: 0x1b 0x44 (Esc + D)
 
 --]]
