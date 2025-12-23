@@ -1,8 +1,6 @@
-# dotfiles
-
 Currently just my nvim config.  
-Definitely not a template/distro, meant to feel as Mac-native as possible.  
-Additional notes/non-nvim configs at the bottom of `init.lua`.
+Definitely not a template, meant to feel as Mac-native as possible.  
+Additional notes/non-nvim (iterm2) configs at the bottom of `init.lua`.
 
 #### TODO (in rough order of importance):
 - [X] Native-like buffer selection funcionality
