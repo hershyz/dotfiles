@@ -226,17 +226,24 @@ require('lualine').setup({
 -- Diagnostic signs
 -- ==========================
 vim.diagnostic.config({
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = "●",
-      [vim.diagnostic.severity.WARN] = "●",
-      [vim.diagnostic.severity.HINT] = "●",
-      [vim.diagnostic.severity.INFO] = "●",
-    }
-  },
-  virtual_text = {
-    prefix = "●",
-  },
+   signs = {
+      text = {
+         [vim.diagnostic.severity.ERROR] = " ",
+         [vim.diagnostic.severity.WARN] = " ",
+         [vim.diagnostic.severity.HINT] = " ",
+         [vim.diagnostic.severity.INFO] = " ",
+      },
+   },
+   virtual_text = {
+      prefix = " ",
+   },
+   update_in_insert = true, -- Update diagnostics while typing
+   underline = true,
+   severity_sort = true, -- Errors take precedence over warnings
+   float = {
+      border = "rounded", -- Rounded borders for floating windows
+      source = "always",
+   },
 })
 
 -- ==========================
@@ -289,18 +296,27 @@ require("nvim-treesitter.configs").setup({
 -- LSP setup
 -- ==========================
 require("mason").setup()
-require("mason-lspconfig").setup({
-  ensure_installed = { "clangd", "rust_analyzer", "gopls", "pyright" },
-})
 
+-- Capabilities for nvim-cmp
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-local servers = { "clangd", "rust_analyzer", "gopls", "pyright" }
 
-for _, name in ipairs(servers) do
-  require("lspconfig")[name].setup({
-    capabilities = capabilities
-  })
-end
+-- Mason ↔ LSP bridge
+require("mason-lspconfig").setup({
+  ensure_installed = {
+    "clangd",
+    "rust_analyzer",
+    "gopls",
+    "pyright",
+  },
+
+  handlers = {
+    function(server_name)
+      require("lspconfig")[server_name].setup({
+        capabilities = capabilities,
+      })
+    end,
+  },
+})
 
 -- ==========================
 -- Completion setup
