@@ -316,12 +316,17 @@ telescope.setup({
 
 -- Telescope keymaps
 local builtin = require("telescope.builtin")
-vim.keymap.set('n', 'ff', builtin.find_files, { desc = 'Find files' })
-vim.keymap.set('n', 'fg', builtin.live_grep, { desc = 'Live grep' })
-vim.keymap.set('n', 'fb', builtin.buffers, { desc = 'Find buffers' })
-vim.keymap.set('n', 'fh', builtin.help_tags, { desc = 'Help tags' })
-vim.keymap.set('n', 'fs', builtin.lsp_document_symbols, { desc = 'Document symbols' })
-vim.keymap.set('n', 'fr', builtin.lsp_references, { desc = 'LSP references' })
+
+vim.keymap.set("n", "ff", builtin.find_files, { desc = "Find files" })
+vim.keymap.set("n", "ag", builtin.live_grep, { desc = "Grep all files" })
+vim.keymap.set("n", "fb", builtin.buffers, { desc = "Find buffers" })
+vim.keymap.set("n", "fh", builtin.help_tags, { desc = "Help tags" })
+vim.keymap.set("n", "fs", builtin.lsp_document_symbols, { desc = "Document symbols" })
+vim.keymap.set("n", "fr", builtin.lsp_references, { desc = "LSP references" })
+
+vim.keymap.set("n", "fg", builtin.current_buffer_fuzzy_find, {
+  desc = "Grep on current buffer",
+})
 
 -- ==========================
 -- Treesitter setup
@@ -386,16 +391,16 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
     Notes / non-nvim configs:
 
-    - A nerd font is needed for icons, JetBrains Mono nerd font (light) is what I'm rocking rn
+    - A nerd font is needed for icons, JetBrains Mono nerd font (light) is what I'm using by default
     
     - Allow application keypad mode in iterm2
     - Allow GPU rendering even when disconnected from power in iterm2
     
     - iterm2 hex code sequences to make copy/cut/paste work (settings -> profiles -> keys -> key bindings)
-      - cmd+a -> 0x1b 0x61
-      - cmd+c -> 0x1b 0x63
-      - cmd+v -> 0x1b 0x76
-      - cmd+x -> 0x1b 0x78
+      cmd+a -> 0x1b 0x61
+      cmd+c -> 0x1b 0x63
+      cmd+v -> 0x1b 0x76
+      cmd+x -> 0x1b 0x78
 
    - iterm2 hex code sequences to make cmd+[arrow] jumping/selection work
       Cmd+Left: 0x1b 0x6c (Esc + l for "left")
