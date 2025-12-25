@@ -8,8 +8,8 @@ Additional notes/non-nvim (iterm2) configs at the bottom of `init.lua`.
 - [X] Native-like buffer selection funcionality
 - [X] Native-like `cmd + c`, `cmd + x`, `cmd + v` functionality
 - [X] Native-like `cmd + [arrow]` functionality
-- [X] Git integration (gitsigns)
-- [ ] Separate keymaps for grep on all files in src dir versus current buffer
+- [ ] Git integration (gitsigns)
+- [X] Separate keymaps for grep on all files in src dir versus current buffer
 - [ ] Tab/shift+tab on selected buffer (move multiple lines right/left)
 - [ ] Comments (like `cmd + /` functionality on vscode)
 - [ ] Keymap to jump through warnings/errors in current buffer
