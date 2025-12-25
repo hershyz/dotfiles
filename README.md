@@ -16,5 +16,5 @@ Additional notes/non-nvim (iterm2) configs at the bottom of `init.lua`.
 - [ ] `()`, `[]`, and `{}` wrapping a selection within a buffer
 - [ ] Native-like `cmd + s`, `cmd + z` functionality
 - [X] Mapping for selection of entire buffer + ability to delete/write over directly afterwards
-- [ ] Smooth scrolling?
+- [X] Smooth scrolling?
 - [ ] Move to lazy.nvim for plugin management?
