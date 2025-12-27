@@ -55,6 +55,11 @@ vim.keymap.set('v', '<M-v>', '"+p', { desc = 'Paste' })
 -- Select Mode: Switch to Visual (<C-g>), then Paste
 vim.keymap.set('s', '<M-v>', '<C-g>"+p', { desc = 'Paste' })
 
+-- 5. SAVE (Cmd+S -> <M-s>
+vim.keymap.set('n', '<M-s>', ':w<CR>', { noremap = true, silent = true })
+vim.keymap.set('i', '<M-s>', '<Esc>:w<CR>', { noremap = true, silent = true })
+vim.keymap.set('v', '<M-s>', '<Esc>:w<CR>', { noremap = true, silent = true })
+
 -- Start selection from insert mode - exit insert, start select, move
 vim.keymap.set('i', '<S-Right>', '<C-o>gh<C-o>l', { desc = 'Select right' })
 vim.keymap.set('i', '<S-Left>', '<C-o>gh<C-o>h', { desc = 'Select left' })
@@ -447,11 +452,12 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
     - Allow application keypad mode in iterm2
     - Allow GPU rendering even when disconnected from power in iterm2
     
-    - iterm2 hex code sequences to make copy/cut/paste work (settings -> profiles -> keys -> key bindings)
+    - iterm2 hex code sequences to make copy/cut/paste/save work (settings -> profiles -> keys -> key bindings)
       cmd+a -> 0x1b 0x61
       cmd+c -> 0x1b 0x63
       cmd+v -> 0x1b 0x76
       cmd+x -> 0x1b 0x78
+      cmd+s -> 0x1b 0x73
 
    - iterm2 hex code sequences to make cmd+[arrow] jumping/selection work
       Cmd+Left: 0x1b 0x6c (Esc + l for "left")
