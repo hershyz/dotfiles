@@ -11,8 +11,7 @@ Additional notes/non-nvim (iterm2) configs at the bottom of `init.lua`.
 - [X] Git integration (gitsigns)
 - [X] Separate keymaps for grep on all files in src dir versus current buffer
 - [X] Native-like `cmd + s` functionality
-- [ ] Tab/shift+tab on selected buffer (move multiple lines right/left)
-- [ ] Comments (like `cmd + /` functionality on vscode)
+- [ ] Multi-cursor
 - [ ] Keymap to jump through warnings/errors in current buffer
 - [ ] `()`, `[]`, and `{}` wrapping a selection within a buffer
 - [X] Mapping for selection of entire buffer + ability to delete/write over directly afterwards
