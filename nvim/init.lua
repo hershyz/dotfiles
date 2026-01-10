@@ -463,6 +463,11 @@ vim.keymap.set('s', '<M-/>', function()
     api.toggle.linewise(vim.fn.visualmode())
 end, { desc = 'Toggle comment' })
 
+-- Tab/Shift+Tab for indenting in visual and select modes
+vim.keymap.set('v', '<Tab>', '>gv', { desc = 'Indent right' })
+vim.keymap.set('v', '<S-Tab>', '<gv', { desc = 'Indent left' })
+vim.keymap.set('s', '<Tab>', '<C-g>>gv<C-g>', { desc = 'Indent right' })
+vim.keymap.set('s', '<S-Tab>', '<C-g><gv<C-g>', { desc = 'Indent left' })
 
 --[[
 
