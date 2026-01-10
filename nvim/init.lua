@@ -176,6 +176,7 @@ ensure_plugin("https://github.com/nvim-lualine/lualine.nvim", "lualine.nvim")
 ensure_plugin("https://github.com/nvim-tree/nvim-web-devicons", "nvim-web-devicons")
 ensure_plugin("https://github.com/MunifTanjim/nui.nvim", "nui.nvim")
 ensure_plugin("https://github.com/lewis6991/gitsigns.nvim", "gitsigns")
+ensure_plugin("https://github.com/numToStr/Comment.nvim", "comment")
 
 -- Install neo-tree from v3.x branch
 local neotree_path = plugin_path .. "neo-tree.nvim"
@@ -450,6 +451,18 @@ cmp.setup({
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
+-- ==========================
+-- Comment setup
+-- ==========================
+require("comment").setup()
+-- Select mode: toggle comment on selection
+local api = require('Comment.api')
+vim.keymap.set('s', '<M-/>', function()
+    local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
+    vim.api.nvim_feedkeys(esc, 'nx', false)
+    api.toggle.linewise(vim.fn.visualmode())
+end, { desc = 'Toggle comment' })
+
 
 --[[
 
@@ -458,8 +471,8 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
     - A nerd font is needed for icons, JetBrains Mono nerd font (light) is what I'm using by default
     
     - Allow application keypad mode in iterm2
-    - Allow GPU rendering even when disconnected from power in iterm2
-    
+    - GPU rendering: force in all scenarios (open advanced settings on GPU rendering)
+
     - iterm2 hex code sequences to make copy/cut/paste/save work (settings -> profiles -> keys -> key bindings)
       cmd+a -> 0x1b 0x61
       cmd+c -> 0x1b 0x63
@@ -467,7 +480,7 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
       cmd+x -> 0x1b 0x78
       cmd+s -> 0x1b 0x73
 
-   - iterm2 hex code sequences to make cmd+[arrow] jumping/selection work
+   - iterm2 hex code sequences to make cmd+[arrow] jumping/selection and comment toggles work
       Cmd+Left: 0x1b 0x6c (Esc + l for "left")
       Cmd+Right: 0x1b 0x72 (Esc + r for "right")
       Cmd+Up: 0x1b 0x75 (Esc + u for "up")
@@ -476,5 +489,5 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
       Cmd+Shift+Right: 0x1b 0x52 (Esc + R)
       Cmd+Shift+Up: 0x1b 0x55 (Esc + U)
       Cmd+Shift+Down: 0x1b 0x44 (Esc + D)
-
+      Cmd+/: 0x1b 0x2f
 --]]
