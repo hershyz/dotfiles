@@ -146,6 +146,12 @@ vim.keymap.set('i', '<M-D>', '<C-o>gh<C-o>G', { desc = 'Select to end of buffer'
 vim.keymap.set('n', '<M-D>', 'vG', { desc = 'Select to end of buffer' })
 vim.keymap.set('s', '<M-D>', '<C-o>G', { desc = 'Extend selection to end of buffer' })
 
+-- Disable vim-visual-multi's shift+arrow mappings
+vim.g.VM_maps = {
+      ["Select l"] = '',
+      ["Select h"] = '',
+}
+
 -- ==========================
 -- Manual plugin installation
 -- ==========================
