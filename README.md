@@ -12,7 +12,7 @@ Additional notes/non-nvim (iterm2) configs at the bottom of `init.lua`.
 - [X] Separate keymaps for grep on all files in src dir versus current buffer
 - [X] Native-like `cmd + s` functionality
 - [X] Multi-cursor for comment toggle and indent right/left on a selected region
-- [ ] Go to definition keymap
+- [X] Go to definition keymap
 - [ ] Keymap to jump through warnings/errors in current buffer
 - [ ] `()`, `[]`, and `{}` wrapping a selection within a buffer
 - [X] Mapping for selection of entire buffer + ability to delete/write over directly afterwards
