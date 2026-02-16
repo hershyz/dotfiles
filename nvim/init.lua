@@ -15,6 +15,7 @@ vim.opt.selection = "inclusive"
 vim.opt.mousemodel = "popup_setpos"
 vim.o.mouse = "a"
 vim.opt.wrap = false
+vim.opt.fillchars = { eob = " " }
 
 -- Remove auto-commenting
 vim.api.nvim_create_autocmd("FileType", {
@@ -55,7 +56,7 @@ vim.keymap.set('s', '<M-x>', '<C-g>"+x', { desc = 'Cut' })
 -- 4. PASTE (Cmd+V -> <M-v>)
 -- Logic:
 -- Insert Mode: Paste from + register using <C-r>
-vim.keymap.set('i', '<M-v>', '<C-r>+', { desc = 'Paste' })
+vim.keymap.set('i', '<M-v>', '<Cmd>set paste<CR><C-r>+<Cmd>set nopaste<CR>', { desc = 'Paste' })
 -- Normal Mode: Paste from + register
 vim.keymap.set('n', '<M-v>', '"+p', { desc = 'Paste' })
 -- Visual Mode: Paste over selection
@@ -212,12 +213,43 @@ require("neo-tree").setup({
   popup_border_style = "rounded",
   enable_git_status = true,
   enable_diagnostics = true,
+  source_selector = {
+    winbar = false,
+    statusline = false,
+  },
   default_component_configs = {
+    indent = {
+      indent_size = 2,
+      padding = 1,
+      with_markers = true,
+      indent_marker = "│",
+      last_indent_marker = "└",
+      with_expanders = true,
+      expander_collapsed = "",
+      expander_expanded = "",
+    },
     icon = {
       folder_closed = "",
       folder_open = "",
       folder_empty = "",
       default = "",
+    },
+    name = {
+      trailing_slash = false,
+      use_git_status_colors = true,
+    },
+    git_status = {
+      symbols = {
+        added     = "",
+        modified  = "",
+        deleted   = "",
+        renamed   = "",
+        untracked = "",
+        ignored   = "",
+        unstaged  = "○",
+        staged    = "●",
+        conflict  = "",
+      },
     },
   },
   filesystem = {
@@ -225,6 +257,16 @@ require("neo-tree").setup({
       enabled = true,
     },
     use_libuv_file_watcher = true,
+    filtered_items = {
+      visible = false,
+      hide_dotfiles = false,
+      hide_gitignored = true,
+      hide_by_name = {
+        ".DS_Store",
+        "thumbs.db",
+        ".git",
+      },
+    },
   },
   window = {
     position = "left",
