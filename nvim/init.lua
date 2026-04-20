@@ -14,6 +14,8 @@ vim.opt.keymodel = "startsel,stopsel"
 vim.opt.selection = "inclusive"
 vim.opt.mousemodel = "popup_setpos"
 vim.o.mouse = "a"
+vim.opt.mousescroll = "ver:1,hor:1"
+vim.opt.signcolumn = "number"
 vim.opt.wrap = false
 vim.opt.fillchars = { eob = " " }
 
@@ -29,8 +31,9 @@ vim.api.nvim_create_autocmd("FileType", {
 -- macOS-style keymaps
 -- ==========================
 
--- Use system clipboard by default
-vim.opt.clipboard = "unnamedplus"
+-- Don't sync unnamed register with system clipboard — d/x/c would clobber it.
+-- Cmd+C/X/V mappings below use "+ explicitly instead.
+vim.opt.clipboard = ""
 
 -- Enable smart line wrapping for left/right arrows
 vim.opt.whichwrap = "b,s,<,>,[,]"
@@ -59,10 +62,20 @@ vim.keymap.set('s', '<M-x>', '<C-g>"+x', { desc = 'Cut' })
 vim.keymap.set('i', '<M-v>', '<Cmd>set paste<CR><C-r>+<Cmd>set nopaste<CR>', { desc = 'Paste' })
 -- Normal Mode: Paste from + register
 vim.keymap.set('n', '<M-v>', '"+p', { desc = 'Paste' })
--- Visual Mode: Paste over selection
-vim.keymap.set('v', '<M-v>', '"+p', { desc = 'Paste' })
+-- Visual Mode: Paste over selection without clobbering the clipboard
+vim.keymap.set('v', '<M-v>', '"_d"+P', { desc = 'Paste' })
 -- Select Mode: Switch to Visual (<C-g>), then Paste
-vim.keymap.set('s', '<M-v>', '<C-g>"+p', { desc = 'Paste' })
+vim.keymap.set('s', '<M-v>', '<C-g>"_d"+P', { desc = 'Paste' })
+
+-- Wrap visual/select selection with matching pair when typing the opener
+local function wrap_pair(open, close)
+  local rhs = string.format('c%s%s<Left><C-r>"<Esc>', open, close)
+  vim.keymap.set('x', open, rhs, { desc = 'Wrap selection with ' .. open .. close })
+  vim.keymap.set('s', open, '<C-g>' .. rhs, { desc = 'Wrap selection with ' .. open .. close })
+end
+wrap_pair('(', ')')
+wrap_pair('[', ']')
+wrap_pair('{', '}')
 
 -- 5. SAVE (Cmd+S -> <M-s>
 vim.keymap.set('n', '<M-s>', ':w<CR>', { noremap = true, silent = true })
@@ -277,6 +290,17 @@ require("neo-tree").setup({
 -- Neo-tree keymap
 vim.keymap.set('n', '<leader>ft', ':Neotree toggle<CR>', { desc = 'Toggle Neo-tree', silent = true })
 
+-- Refresh Neo-tree git status when nvim regains focus (after git stage/push in another terminal)
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "TermClose", "TermLeave" }, {
+  callback = function()
+    local ok, manager = pcall(require, "neo-tree.sources.manager")
+    if ok then
+      pcall(manager.refresh, "filesystem")
+      pcall(manager.refresh, "git_status")
+    end
+  end,
+})
+
 -- ==========================
 -- Gruvbox setup
 -- ==========================
@@ -350,6 +374,10 @@ vim.diagnostic.config({
    },
 })
 
+-- Jump between diagnostics
+vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, { desc = 'Next diagnostic' })
+vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = 'Prev diagnostic' })
+
 -- ==========================
 -- Autopairs setup
 -- ==========================
@@ -419,8 +447,8 @@ require('gitsigns').setup {
        untracked    = { text = '┆' },
      },
      signs_staged_enable = true,
-     signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
-     numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+     signcolumn = false, -- Don't draw gitsigns glyphs; use numhl instead
+     numhl      = true,  -- Tint the line number for changed lines
      linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
      word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
      watch_gitdir = {
@@ -554,3 +582,4 @@ vim.keymap.set('s', '<S-Tab>', '<C-g><gv<C-g>', { desc = 'Indent left' })
       Cmd+/: 0x1b 0x2f
 
 --]]
+
