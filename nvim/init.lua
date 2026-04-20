@@ -330,6 +330,23 @@ require("gruvbox").setup({
 vim.o.background = "dark"
 vim.cmd([[colorscheme gruvbox]])
 
+-- Clear background on diagnostic signs so they match gruvbox bg (no gray halo)
+local function clear_sign_backgrounds()
+  local groups = {
+    "SignColumn",
+    "DiagnosticSignError", "DiagnosticSignWarn",
+    "DiagnosticSignInfo", "DiagnosticSignHint", "DiagnosticSignOk",
+    "NeoTreeSignColumn",
+    "GitSignsAdd", "GitSignsChange", "GitSignsDelete",
+  }
+  for _, g in ipairs(groups) do
+    vim.api.nvim_set_hl(0, g, { bg = "NONE", ctermbg = "NONE",
+      fg = vim.api.nvim_get_hl(0, { name = g, link = false }).fg })
+  end
+end
+clear_sign_backgrounds()
+vim.api.nvim_create_autocmd("ColorScheme", { callback = clear_sign_backgrounds })
+
 -- ==========================
 -- Lualine setup
 -- ==========================
